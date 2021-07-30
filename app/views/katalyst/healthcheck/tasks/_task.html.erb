@@ -1,0 +1,7 @@
+<tr>
+  <td><%= task.name %></td>
+  <td class="status-<%= task.status %>"><%= task.ok? ? "OK" : "FAIL" %></td>
+  <td><%= task.description %></td>
+  <td><%= l task.last_time %></td>
+  <td><%= l task.next_time %></td>
+</tr>

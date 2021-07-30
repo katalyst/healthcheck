@@ -1,3 +1,5 @@
 Rails.application.routes.draw do
-  mount Katalyst::Healthcheck::Engine => "/katalyst-healthcheck"
+  mount Katalyst::Healthcheck::Engine => "/healthcheck"
+
+  root to: "homepages#show"
 end

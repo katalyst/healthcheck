@@ -1,0 +1,24 @@
+<h1><%= @task.name %></h1>
+
+<table>
+  <tr>
+    <th>Status</th>
+    <td class="status-<%= @task.status %>"><%= @task.ok? ? "OK" : "FAIL" %></td>
+  </tr>
+
+  <tr>
+    <th>Description</th>
+    <td><%= @task.description %></td>
+  </tr>
+
+  <tr>
+    <th>Last Ran</th>
+    <td><%= l @task.last_time %></td>
+  </tr>
+
+  <tr>
+    <th>Next Run Scheduled</th>
+    <td><%= l @task.next_time %></td>
+  </tr>
+
+</table>

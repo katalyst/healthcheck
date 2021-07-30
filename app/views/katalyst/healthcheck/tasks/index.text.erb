@@ -1,0 +1,5 @@
+<%= @tasks.all?(&:ok?) ? "OK" : "FAIL" %>
+
+<% if @tasks.any? %>
+<%= render partial: "task", collection: @tasks %>
+<% end %>

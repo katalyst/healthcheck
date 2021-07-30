@@ -1,0 +1,19 @@
+<div class="tasks">
+<p>
+  <%= @tasks.all?(&:ok?) ? "OK" : "FAIL" %>
+</p>
+
+<% if @tasks.any? %>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Description</th>
+      <th>Last Ran</th>
+      <th>Next Run Scheduled</th>
+    </tr>
+
+    <%= render partial: "task", collection: @tasks %>
+  </table>
+<% end %>
+</div>
