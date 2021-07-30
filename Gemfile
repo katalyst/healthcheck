@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -6,9 +8,7 @@ gemspec
 
 group :development do
   gem "rspec-rails"
-  gem "rubocop-performance"
-  gem "rubocop-rails"
-  gem "rubocop-rspec"
+  gem "rubocop-katalyst", require: false
   gem "sqlite3"
 end
 

@@ -1,3 +1,9 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  get "/healthcheck", to: Katalyst::Healthcheck::Route.static(200, "OK")
+  get "/healthcheck/tasks", to: Katalyst::Healthcheck::Route.from_tasks
+  get "/healthcheck/task_details", to: Katalyst::Healthcheck::Route.from_tasks(detail: true)
+
+  root to: "homepages#show"
 end
