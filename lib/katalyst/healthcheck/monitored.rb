@@ -33,7 +33,9 @@ module Katalyst
           task = Task.find(name)
           if task.nil?
             task = defined_healthcheck_tasks[name]
-            task&.save
+            raise "task #{name} not found" if task.nil?
+
+            task.save
           end
           task
         end
