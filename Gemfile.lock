@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    katalyst-healthcheck (0.2.2)
+    katalyst-healthcheck (0.2.3)
       rails (~> 6.1.4, >= 6.1.4.1)
       redis (>= 3.3.5)
       redlock (~> 1.2.2)
