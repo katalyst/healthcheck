@@ -23,7 +23,8 @@ module Katalyst
         # @return [Array<Hash>] List of tasks attribute data
         def read
           data = fetch
-          data["tasks"].values
+          tasks = data["tasks"] || {}
+          tasks.values
         end
 
         # Write task state

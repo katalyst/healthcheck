@@ -11,6 +11,13 @@ RSpec.describe Katalyst::Healthcheck::Store::Redis do
     store.options.cache_key = "test"
   end
 
+  describe "read" do
+    it "fetches tasks state" do
+      tasks = store.read
+      expect(tasks).to be_kind_of(Array)
+    end
+  end
+
   describe "update" do
     it "saves task state" do
       store.update("task", state)
