@@ -13,6 +13,7 @@ require "katalyst/healthcheck/store/redis"
 require "katalyst/healthcheck/task"
 require "katalyst/healthcheck/monitored"
 require "katalyst/healthcheck/route"
+require "katalyst/healthcheck/actions/sidekiq"
 
 module Katalyst
   module Healthcheck
