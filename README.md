@@ -26,8 +26,8 @@ $ gem install katalyst-healthcheck
 
 Configuration:
 
-If running in a cluster environment or if redis is not localhost, redis url should be configured
-in an initializer, e.g.
+Redis URL will automatically be set from Rails configuration, but can be configured
+manually in an initializer, e.g.
 ```
 Katalyst::Healthcheck.configure do |config|
   config.store.redis.options.url = "redis://hostname:port"
