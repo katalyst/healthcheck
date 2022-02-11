@@ -8,21 +8,41 @@ module Katalyst
       class Redis
         DEFAULT_CACHE_KEY = "katalyst_healthcheck_tasks"
         MAX_WRITE_TIME    = 5000 # milliseconds
+        DEFAULT_HOST      = "localhost"
+        DEFAULT_PORT      = 6379
         DEFAULT_OPTIONS   = {
-          url:       "redis://localhost:6379",
+          url:       "redis://#{DEFAULT_HOST}:#{DEFAULT_PORT}",
           cache_key: DEFAULT_CACHE_KEY,
         }.freeze
+
+        class << self
+          # @return [String] Redis URL defined in rails config
+          def rails_redis_url
+            redis_config = rails_redis_config
+            host         = redis_config[:host] || DEFAULT_HOST
+            port         = redis_config[:port] || DEFAULT_PORT
+            "redis://#{host}:#{port}"
+          end
+
+          def rails_redis_config
+            Rails.application&.config_for(:redis)
+          rescue StandardError
+            {}
+          end
+        end
 
         # @attr_reader options [OpenStruct] Redis configuration options
         attr_reader :options
 
-        def initialize(options = DEFAULT_OPTIONS)
+        def initialize(options = {})
+          options  = options.reverse_merge(url: self.class.rails_redis_url) if defined?(Rails)
+          options  = DEFAULT_OPTIONS.merge(options)
           @options = OpenStruct.new(options)
         end
 
         # @return [Array<Hash>] List of tasks attribute data
         def read
-          data = fetch
+          data  = fetch
           tasks = data["tasks"] || {}
           tasks.values
         end

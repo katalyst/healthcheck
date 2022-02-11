@@ -26,8 +26,8 @@ $ gem install katalyst-healthcheck
 
 Configuration:
 
-If running in a cluster environment or if redis is not localhost, redis url should be configured
-in an initializer, e.g.
+Redis URL will automatically be set from Rails configuration, but can be configured
+manually in an initializer, e.g.
 ```
 Katalyst::Healthcheck.configure do |config|
   config.store.redis.options.url = "redis://hostname:port"
@@ -38,17 +38,17 @@ Add to routes:
 
 ```
 get '/healthcheck', to: Katalyst::Healthcheck::Route.static(200, "OK")
-get '/healthcheck/tasks', to: Katalyst::Healthcheck::Route.from_tasks
-get '/healthcheck/task_details', to: Katalyst::Healthcheck::Route.from_tasks(detail: true)
+get '/healthcheck/status', to: Katalyst::Healthcheck::Route.from_tasks
+get '/healthcheck/dashboard', to: Katalyst::Healthcheck::Route.from_tasks(detail: true)
 ```
 
 With the above configuration, the following routes will be available:
 
-### /health
+### /healthcheck
 
 A basic check that tests that the rails application is up and running.
 
-### /health/tasks
+### /healthcheck/status
 
 Tests that all application background tasks are running as expected. 
 
