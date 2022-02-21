@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require "spec_helper"
+require "active_support/time"
 
 module Test
   class MonitoredTask

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "redis"
+require "json"
 
 module Katalyst
   module Healthcheck
@@ -18,7 +19,7 @@ module Katalyst
         class << self
           # @return [String] Redis URL defined in rails config
           def rails_redis_url
-            redis_config = rails_redis_config
+            redis_config = rails_redis_config || {}
             host         = redis_config[:host] || DEFAULT_HOST
             port         = redis_config[:port] || DEFAULT_PORT
             "redis://#{host}:#{port}"
@@ -35,9 +36,9 @@ module Katalyst
         attr_reader :options
 
         def initialize(options = {})
-          options  = options.reverse_merge(url: self.class.rails_redis_url) if defined?(Rails)
+          options  = { url: self.class.rails_redis_url }.merge(options) if defined?(Rails)
           options  = DEFAULT_OPTIONS.merge(options)
-          @options = OpenStruct.new(options)
+          @options = Struct.new(:url, :cache_key).new(options[:url], options[:cache_key])
         end
 
         # @return [Array<Hash>] List of tasks attribute data
