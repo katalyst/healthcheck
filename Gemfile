@@ -7,7 +7,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gemspec
 
 group :development do
-  gem "rspec-rails"
+  gem "rspec", "~> 3.0"
   gem "rubocop-katalyst", require: false
   gem "sqlite3"
 end

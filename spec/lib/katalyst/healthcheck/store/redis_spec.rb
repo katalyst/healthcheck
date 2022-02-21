@@ -1,5 +1,11 @@
 # frozen_string_literal: true
 
+module Rails
+  class Application
+    def config_for(name); end
+  end
+end
+
 RSpec.describe Katalyst::Healthcheck::Store::Redis do
   subject { store }
 
