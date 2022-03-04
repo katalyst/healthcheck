@@ -61,7 +61,7 @@ module Katalyst
             if task_state.nil?
               task_data.delete(name)
             else
-              task_data[name] = task_state
+              task_data[name] = serialize(task_state)
             end
             client.set(cache_key, JSON.generate(data))
           end
@@ -74,6 +74,18 @@ module Katalyst
         end
 
         private
+
+        # @param task_state [Hash]
+        def serialize(task_state)
+          task_state.transform_values do |value|
+            case value
+            when ActiveSupport::TimeWithZone, DateTime
+              value.strftime("%d/%m/%Y %H:%M:%S %z")
+            else
+              value
+            end
+          end
+        end
 
         def cache_key
           options.cache_key || DEFAULT_CACHE_KEY
