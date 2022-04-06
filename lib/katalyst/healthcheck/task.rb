@@ -102,6 +102,10 @@ module Katalyst
         self
       end
 
+      def reload
+        Task.find(name)
+      end
+
       private
 
       def store

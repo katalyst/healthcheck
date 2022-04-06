@@ -6,9 +6,10 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 # Specify your gem's dependencies in katalyst-healthcheck.gemspec.
 gemspec
 
-group :development do
+group :development, :test do
   gem "rspec", "~> 3.0"
   gem "rubocop-katalyst", require: false
+  gem "sidekiq"
   gem "sqlite3"
 end
 
