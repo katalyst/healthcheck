@@ -3,14 +3,12 @@
 RSpec.describe Katalyst::Healthcheck::Actions::Sidekiq do
   subject { action }
 
-  let(:action) { described_class }
+  let(:action) { described_class.new }
+  let(:task) { Katalyst::Healthcheck::Task.find(:sidekiq_health) }
 
-  before do
-    allow(action).to receive(:healthy!)
-  end
+  before { task.unhealthy! }
 
   it "marks sidekiq as healthy" do
-    action.call
-    expect(action).to have_received(:healthy!)
+    expect { action.perform }.to change { task.reload.ok? }.to(true)
   end
 end
