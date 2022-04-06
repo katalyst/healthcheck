@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "sidekiq"
 
 module Katalyst
@@ -11,8 +13,12 @@ module Katalyst
 
         define_task :sidekiq_health, "Sidekiq background processing", interval: 60
 
+        def self.call
+          perform_async
+        end
+
         def perform
-          Sidekiq.healthy! :sidekiq_health
+          self.class.healthy! :sidekiq_health
         end
       end
     end

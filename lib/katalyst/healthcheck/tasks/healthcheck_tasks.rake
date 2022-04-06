@@ -20,6 +20,6 @@ namespace :katalyst_healthcheck do
 
   desc "Call the sidekiq health check action to check that sidekiq is able to process background tasks"
   task sidekiq: :environment do
-    Katalyst::Healthcheck::Actions::Sidekiq.new.perform_async
+    Katalyst::Healthcheck::Actions::Sidekiq.call
   end
 end
