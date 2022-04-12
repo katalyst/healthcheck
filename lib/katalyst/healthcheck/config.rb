@@ -16,8 +16,7 @@ module Katalyst
       private
 
       def build_store(name)
-        klass = "Katalyst::Healthcheck::Store::#{name.to_s.camelize}".constantize
-        klass.new
+        Object.const_get("Katalyst::Healthcheck::Store::#{name.to_s.capitalize}").new
       end
     end
   end

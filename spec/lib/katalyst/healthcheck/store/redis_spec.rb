@@ -27,7 +27,7 @@ RSpec.describe Katalyst::Healthcheck::Store::Redis do
     end
 
     context "with rails config" do
-      let(:redis_config) { { host: "redis-host", port: 9000 } }
+      let(:redis_config) { { "host" => "redis-host", "port" => 9000 } }
       let(:application) { instance_double(Rails::Application) }
 
       before do

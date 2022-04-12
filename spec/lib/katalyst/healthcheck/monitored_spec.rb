@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "spec_helper"
-require "active_support/time"
 
 module Test
   class MonitoredTask
@@ -71,12 +70,6 @@ RSpec.describe Katalyst::Healthcheck::Monitored do
   describe "define_task" do
     context "when task has never run but has a defined interval" do
       let(:task_called) { false }
-
-      around do |example|
-        travel 1.day do
-          example.run
-        end
-      end
 
       it { is_expected.not_to be_ok }
     end

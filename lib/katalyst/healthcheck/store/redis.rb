@@ -20,8 +20,8 @@ module Katalyst
           # @return [String] Redis URL defined in rails config
           def rails_redis_url
             redis_config = rails_redis_config || {}
-            host         = redis_config[:host] || DEFAULT_HOST
-            port         = redis_config[:port] || DEFAULT_PORT
+            host         = redis_config["host"] || DEFAULT_HOST
+            port         = redis_config["port"] || DEFAULT_PORT
             "redis://#{host}:#{port}"
           end
 
@@ -62,7 +62,7 @@ module Katalyst
             if task_state.nil?
               task_data.delete(name)
             else
-              task_data[name] = serialize(task_state)
+              task_data[name] = task_state
             end
             client.set(cache_key, JSON.generate(data))
           end
@@ -75,18 +75,6 @@ module Katalyst
         end
 
         private
-
-        # @param task_state [Hash]
-        def serialize(task_state)
-          task_state.transform_values do |value|
-            case value
-            when ActiveSupport::TimeWithZone, DateTime
-              value.strftime("%d/%m/%Y %H:%M:%S %z")
-            else
-              value
-            end
-          end
-        end
 
         def cache_key
           options.cache_key || DEFAULT_CACHE_KEY
@@ -104,7 +92,7 @@ module Katalyst
         end
 
         def lock_manager
-          raise "redis url is required" if options.url.blank?
+          raise "redis url is required" unless options.url
 
           @lock_manager ||= ::Redlock::Client.new([options.url])
         end
