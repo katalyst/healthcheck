@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary  = "Health check routes and functions"
   spec.license  = "MIT"
 
-  spec.required_ruby_version = ">= 2.7"
+  spec.required_ruby_version = ">= 2.3"
 
   spec.metadata["allowed_push_host"] = "https://rubygems.org"
   spec.metadata["rubygems_mfa_required"] = "true"
@@ -22,7 +22,6 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  spec.add_dependency "activemodel", ">= 6"
-  spec.add_dependency "redis", ">= 3.3.5"
-  spec.add_dependency "redlock", ">= 1.2.2"
+  spec.add_dependency "redis", ">= 3"
+  spec.add_dependency "redlock", ">= 1.2"
 end

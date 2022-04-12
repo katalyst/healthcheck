@@ -11,3 +11,6 @@
 /.rspec_status
 .byebug_history
 /.idea/
+
+# Don't commit Gemfile.lock as it prevents testing against different ruby versions
+Gemfile.lock

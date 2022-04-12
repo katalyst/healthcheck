@@ -4,8 +4,7 @@ module Katalyst
   module Healthcheck
     # Represents a background task that runs periodically in an application
     class Task
-      include ActiveModel::Model
-      include ActiveModel::Attributes
+      include Store::Attributes
 
       TASK_GRACE_PERIOD = 10 * 60 # 10 minutes
 
@@ -65,11 +64,11 @@ module Katalyst
 
       # @return [Boolean] true if this background task is running on schedule
       def on_schedule?
-        next_time.nil? || next_time + TASK_GRACE_PERIOD > Time.current
+        next_time.nil? || next_time + TASK_GRACE_PERIOD > DateTime.now
       end
 
       def next_time
-        return nil if interval.blank?
+        return nil if interval.nil?
 
         (last_time || created_at) + interval
       end
@@ -77,7 +76,7 @@ module Katalyst
       # Mark this task as healthy and save state
       # @return [Task] This task
       def healthy!
-        self.last_time = Time.current
+        self.last_time = DateTime.now
         self.error     = nil
         self.status    = :ok
 
@@ -87,7 +86,7 @@ module Katalyst
       # Mark this task as unhealthy and save state
       # @return [Task] This task
       def unhealthy!(error = nil)
-        self.error  = error.presence || "Fail"
+        self.error  = error || "Fail"
         self.status = :fail
 
         save
@@ -96,8 +95,8 @@ module Katalyst
       # Save task state
       # @return [Task] This task
       def save
-        self.created_at ||= Time.now
-        self.updated_at = Time.now
+        self.created_at ||= DateTime.now
+        self.updated_at = DateTime.now
         store.update(name, attributes)
         self
       end

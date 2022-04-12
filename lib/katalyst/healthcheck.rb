@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
-require "active_support"
-require "active_model"
 require "redlock"
 
 require "katalyst/healthcheck/version"
 require "katalyst/healthcheck/railtie" if defined?(Rails)
 require "katalyst/healthcheck/config"
+require "katalyst/healthcheck/store/attributes"
 require "katalyst/healthcheck/store/memory"
 require "katalyst/healthcheck/store/redis"
 require "katalyst/healthcheck/task"

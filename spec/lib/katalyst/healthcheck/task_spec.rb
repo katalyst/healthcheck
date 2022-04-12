@@ -3,10 +3,14 @@
 RSpec.describe Katalyst::Healthcheck::Task do
   let(:task) { described_class.new(name: :test_task, interval: interval, last_time: last_time) }
   let(:interval) { 60 * 20 }
-  let(:last_time) { Time.now - (interval / 2) }
+  let(:last_time) { DateTime.now - (interval / 2) }
 
   before do
     Katalyst::Healthcheck.config.store = :memory
+  end
+
+  describe "#attributes" do
+    it { expect(task).to have_attributes(name: "test_task", interval: interval, last_time: last_time) }
   end
 
   describe "#healthy!" do
@@ -14,8 +18,8 @@ RSpec.describe Katalyst::Healthcheck::Task do
 
     let(:action) { task.healthy! }
 
-    it { expect { action }.to change(task, :status).to(:ok) }
-    it { expect(action.last_time).to be_present }
+    it { expect { action }.to change(task, :status).to("ok") }
+    it { expect { action }.to change(task, :last_time) }
   end
 
   describe "#unhealthy!" do
@@ -23,7 +27,7 @@ RSpec.describe Katalyst::Healthcheck::Task do
 
     let(:action) { task.unhealthy! }
 
-    it { expect { action }.to change(task, :status).to(:fail) }
+    it { expect { action }.to change(task, :status).to("fail") }
     it { expect { action }.not_to change(task, :last_time) }
   end
 
@@ -31,7 +35,7 @@ RSpec.describe Katalyst::Healthcheck::Task do
     subject { task.ok? }
 
     context "when task has not run when expected" do
-      let(:last_time) { Time.now - (interval * 2) }
+      let(:last_time) { DateTime.now - (interval * 2) }
 
       it { is_expected.to be_falsey }
     end

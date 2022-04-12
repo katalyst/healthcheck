@@ -3,15 +3,22 @@
 module Katalyst
   module Healthcheck
     module Monitored
-      extend ActiveSupport::Concern
+      def self.included(klass)
+        klass.extend(ClassMethods)
+      end
 
-      module HealthMethods
+      module ClassMethods
         # Define a task to be monitored
         # @param name [Symbol] The name of the task
         # @param description [String] A description of the task's function
         # @param interval [Integer,ActiveSupport::Duration] Expected frequency that this task runs, e.g. 1.day
         def define_task(name, description, interval:)
           defined_healthcheck_tasks[name] = Task.new(name: name, description: description, interval: interval)
+        end
+
+        # @return [Hash] Defined tasks keyed by name
+        def defined_healthcheck_tasks
+          @defined_healthcheck_tasks ||= {}
         end
 
         # Mark a task as healthy
@@ -41,22 +48,17 @@ module Katalyst
         end
       end
 
-      class_methods do
-        include HealthMethods
-
-        attr_accessor :healthcheck_task_definitions
-
-        # @return [Hash] Defined tasks keyed by name
-        def defined_healthcheck_tasks
-          self.healthcheck_task_definitions ||= {}
-        end
+      # Mark a task as healthy
+      # @param name [Symbol] The name of the task
+      def healthy!(name)
+        self.class.healthy! name
       end
 
-      include HealthMethods
-
-      # @return [Hash] Defined tasks keyed by name
-      def defined_healthcheck_tasks
-        self.class.healthcheck_task_definitions ||= {}
+      # Mark a task as unhealthy
+      # @param name [Symbol] The name of the task
+      # @param error [String] Optional error message
+      def unhealthy!(name, error = nil)
+        self.class.unhealthy! name, error
       end
     end
   end
