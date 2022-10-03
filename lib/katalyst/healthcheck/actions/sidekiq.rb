@@ -11,7 +11,7 @@ module Katalyst
 
         sidekiq_options retry: false
 
-        define_task :sidekiq_health, "Sidekiq background processing", interval: 60
+        define_healthcheck_task :sidekiq_health, "Sidekiq background processing", interval: 60
 
         def self.call
           perform_async

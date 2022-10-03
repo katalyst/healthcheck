@@ -6,7 +6,7 @@ module Test
   class MonitoredTask
     include Katalyst::Healthcheck::Monitored
 
-    define_task :task, "test task", interval: 86400
+    define_healthcheck_task :task, "test task", interval: 86400
 
     def call(success: true)
       if success
@@ -67,7 +67,7 @@ RSpec.describe Katalyst::Healthcheck::Monitored do
     end
   end
 
-  describe "define_task" do
+  describe "define_healthcheck_task" do
     context "when task has never run but has a defined interval" do
       let(:task_called) { false }
 

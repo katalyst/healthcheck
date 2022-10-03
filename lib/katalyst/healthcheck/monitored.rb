@@ -12,9 +12,10 @@ module Katalyst
         # @param name [Symbol] The name of the task
         # @param description [String] A description of the task's function
         # @param interval [Integer,ActiveSupport::Duration] Expected frequency that this task runs, e.g. 1.day
-        def define_task(name, description, interval:)
+        def define_healthcheck_task(name, description, interval:)
           defined_healthcheck_tasks[name] = Task.new(name: name, description: description, interval: interval)
         end
+        alias define_task define_healthcheck_task
 
         # @return [Hash] Defined tasks keyed by name
         def defined_healthcheck_tasks

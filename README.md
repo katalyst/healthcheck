@@ -58,7 +58,7 @@ the `Katalyst::Healthcheck::Monitored` concern's `healthy!` and `unhealthy` meth
 ``` ruby
 include Katalyst::Healthcheck::Monitored
 
-define_task :my_task, "My task description", interval: 1.day
+define_healthcheck_task :my_task, "My task description", interval: 1.day
 
 def do_task
   ... task code here ...
