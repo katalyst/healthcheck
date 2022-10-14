@@ -9,8 +9,8 @@ module Katalyst
       class Redis
         DEFAULT_CACHE_KEY = "katalyst_healthcheck_tasks"
         MAX_WRITE_TIME    = 5000 # milliseconds
-        DEFAULT_HOST      = "localhost"
-        DEFAULT_PORT      = 6379
+        DEFAULT_HOST      = ENV.fetch("DEFAULT_REDIS_HOST", "localhost")
+        DEFAULT_PORT      = ENV.fetch("DEFAULT_REDIS_PORT", "6379")
         DEFAULT_OPTIONS   = {
           url:       "redis://#{DEFAULT_HOST}:#{DEFAULT_PORT}",
           cache_key: DEFAULT_CACHE_KEY,
@@ -19,10 +19,12 @@ module Katalyst
         class << self
           # @return [String] Redis URL defined in rails config
           def rails_redis_url
-            redis_config = rails_redis_config || {}
-            host         = redis_config["host"] || DEFAULT_HOST
-            port         = redis_config["port"] || DEFAULT_PORT
-            "redis://#{host}:#{port}"
+            ENV.fetch("REDIS_URL") do
+              redis_config = rails_redis_config || {}
+              host         = redis_config["host"] || DEFAULT_HOST
+              port         = redis_config["port"] || DEFAULT_PORT
+              "redis://#{host}:#{port}"
+            end
           end
 
           def rails_redis_config
