@@ -55,7 +55,7 @@ module Katalyst
         end
 
         def read(attributes)
-          deserialize(attributes[key]) if attributes.has_key?(key)
+          deserialize(attributes[key]) if attributes.key?(key)
         end
 
         def write(attributes, value)

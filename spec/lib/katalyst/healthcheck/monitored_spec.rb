@@ -6,7 +6,7 @@ module Test
   class MonitoredTask
     include Katalyst::Healthcheck::Monitored
 
-    define_healthcheck_task :task, "test task", interval: 86400
+    define_healthcheck_task :task, "test task", interval: 86_400
 
     def call(success: true)
       if success
@@ -22,7 +22,7 @@ module Test
   class MonitoredTaskWithoutDefinedTask
     include Katalyst::Healthcheck::Monitored
 
-    def call(success: true)
+    def call(success: true) # rubocop:disable Lint/UnusedMethodArgument
       healthy!(:undefined_task)
 
       self

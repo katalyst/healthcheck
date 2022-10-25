@@ -1,0 +1,25 @@
+require:
+  - rubocop-katalyst
+
+AllCops:
+  Exclude:
+    - bin/*
+    - config/**/*
+    - db/**/*
+    - vendor/plugins/**/db/**/*
+    - deploy/*
+    - node_modules/**/*
+    - vendor/bundle/**/*
+    - vendor/plugins/**/vendor/gems/**/*
+    - vendor/gems/**/*
+  NewCops: enable
+  TargetRubyVersion: 2.3
+
+RSpec/ExampleLength:
+  Max: 25
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 25
+
+Style/CollectionMethods:
+  Enabled: false

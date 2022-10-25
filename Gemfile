@@ -8,5 +8,6 @@ gemspec
 
 gem "rake"
 gem "rspec"
+gem "rubocop-katalyst", require: false
 gem "sidekiq"
 gem "sqlite3"

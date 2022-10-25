@@ -6,11 +6,11 @@ module Katalyst
     class Route
       class << self
         def static(status, message)
-          Proc.new { |_env| [status, { "Content-Type" => "text/plain" }, [message]] }
+          proc { |_env| [status, { "Content-Type" => "text/plain" }, [message]] }
         end
 
         def from_tasks(detail: false)
-          Proc.new do |_env|
+          proc do |_env|
             tasks = Task.all
             status = tasks.all?(&:ok?) ? 200 : 500
             message = status == 200 ? "OK" : "FAIL"

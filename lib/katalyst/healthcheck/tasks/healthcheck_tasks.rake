@@ -8,7 +8,7 @@ namespace :katalyst_healthcheck do
 
   desc "Clear status for a health check task"
   task clear_task: :environment do
-    task_name = ENV["task_name"]
+    task_name = ENV.fetch("task_name", nil)
     if task_name.nil?
       puts "usage: rake #{ARGV[0]} task_name=name\n  task name is required."
       exit 1

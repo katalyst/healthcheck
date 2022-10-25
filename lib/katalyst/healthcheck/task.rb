@@ -16,7 +16,7 @@ module Katalyst
 
         # @param name [Symbol] name of the task
         def find(name)
-          all.find { |task| task.name == name.to_s }
+          all.detect { |task| task.name == name.to_s }
         end
 
         def find!(name)
