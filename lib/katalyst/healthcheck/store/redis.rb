@@ -40,7 +40,8 @@ module Katalyst
         def initialize(options = {})
           options  = { url: self.class.rails_redis_url }.merge(options) if defined?(Rails)
           options  = DEFAULT_OPTIONS.merge(options)
-          @options = Struct.new(:url, :cache_key).new(options[:url], options[:cache_key])
+          namespaced_cache_key = [ENV["RAILS_ENV"], options[:cache_key]].compact.join("_")
+          @options = Struct.new(:url, :cache_key).new(options[:url], namespaced_cache_key)
         end
 
         # @return [Array<Hash>] List of tasks attribute data

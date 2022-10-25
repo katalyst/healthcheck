@@ -9,13 +9,27 @@ end
 RSpec.describe Katalyst::Healthcheck::Store::Redis do
   subject { store }
 
-  let(:store) { described_class.new(cache_key: "test") }
+  let(:store) { described_class.new(cache_key: "spec") }
   let(:state) { { "description" => "test description" } }
   let(:store_tasks) { store.read || [] }
+
+  before { ENV['RAILS_ENV'] = "production" }
 
   describe "#initialize" do
     it "sets redis url" do
       expect(store.options[:url]).to eq("redis://localhost:6379")
+    end
+
+    it "sets default cache key" do
+      expect(store.options[:cache_key]).to eq("production_spec")
+    end
+
+    context "with no rails env" do
+      before { ENV['RAILS_ENV'] = nil }
+
+      it "sets production cache key" do
+        expect(store.options[:cache_key]).to eq("spec")
+      end
     end
 
     context "with a url in constructor" do
