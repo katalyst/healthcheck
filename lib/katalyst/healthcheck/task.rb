@@ -70,7 +70,7 @@ module Katalyst
       def next_time
         return nil if interval.nil?
 
-        (last_time || created_at) + interval
+        (last_time || created_at) + interval.seconds
       end
 
       # Mark this task as healthy and save state
