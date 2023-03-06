@@ -91,7 +91,7 @@ module Katalyst
         end
 
         def client
-          @client ||= ::Redis.new(options.to_h)
+          @client ||= ::Redis.new(url: options.url)
         end
 
         def lock_manager
