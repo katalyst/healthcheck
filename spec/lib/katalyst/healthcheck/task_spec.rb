@@ -2,7 +2,7 @@
 
 RSpec.describe Katalyst::Healthcheck::Task do
   let(:task) { described_class.new(name: :test_task, interval: interval, last_time: last_time) }
-  let(:interval) { 60 * 20 }
+  let(:interval) { 60 * 20 } # seconds
   let(:last_time) { DateTime.now - (interval / 2) }
 
   before do
@@ -29,6 +29,13 @@ RSpec.describe Katalyst::Healthcheck::Task do
 
     it { expect { action }.to change(task, :status).to("fail") }
     it { expect { action }.not_to change(task, :last_time) }
+  end
+
+  describe "#next_time" do
+    let(:last_time) { DateTime.new(2023, 3, 6, 10, 00) }
+    let(:interval) { 600 } # 10 minutes
+
+    it { expect(task.next_time).to eq(DateTime.new(2023, 3, 6, 10, 10)) }
   end
 
   describe "#ok?" do

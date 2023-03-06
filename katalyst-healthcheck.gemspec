@@ -22,6 +22,7 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  spec.add_dependency "redis", ">= 3"
+  spec.add_dependency "activesupport", ">= 3"
+  spec.add_dependency "redis", ">= 3", "< 5"
   spec.add_dependency "redlock", ">= 1.2"
 end
