@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "sidekiq"
-
 module Katalyst
   module Healthcheck
     module Actions

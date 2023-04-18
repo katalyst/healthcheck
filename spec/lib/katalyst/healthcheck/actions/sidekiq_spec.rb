@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
+require "sidekiq"
 require "sidekiq/testing"
+require "katalyst/healthcheck/actions/sidekiq"
 
 RSpec.describe Katalyst::Healthcheck::Actions::Sidekiq do
   subject { action }
