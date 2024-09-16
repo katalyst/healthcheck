@@ -9,4 +9,4 @@ gemspec
 gem "rake"
 gem "rspec"
 gem "sidekiq"
-gem "sqlite3", "~> 1.7"
+gem "sqlite3", "< 2"
